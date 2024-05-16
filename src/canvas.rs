@@ -141,21 +141,6 @@ impl Canvas {
         }
     }
 
-    pub fn draw_pixel(&mut self, x: f32, y: f32, color: Color) {
-
-        let i = (x * (self.width - 1) as f32) as u32;
-        let j = (y * (self.height - 1) as f32) as u32;
-
-        let index = (i + (self.width * j)) as usize;
-
-        if index >= self.pixels.capacity() {
-            return;
-        }
-
-        self.pixels[index] = color.0;
-
-    }
-
     pub fn fill_ij<F>(&mut self, filling_function: F) 
     where F: Fn(u32, u32) -> Color
     {
@@ -167,6 +152,8 @@ impl Canvas {
     }
 
     pub fn put_pixel(&mut self, i: u32, j: u32, color: Color) {
+        let i = i - self.get_width() / 2;
+        let j = j + self.get_height() / 2;
         let index = (i + (j * self.width)) as usize;
         self.pixels[index] = color.0;
     }

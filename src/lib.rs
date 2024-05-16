@@ -1,6 +1,7 @@
 pub mod canvas;
 pub mod window;
 pub mod app;
+pub mod mathsf;
 
 mod gl;
 
@@ -27,9 +28,7 @@ mod tests {
         }
     
         fn render_routine(&self, canvas: &mut Canvas) {
-            canvas.fill_ij(|i, j| {
-                Color::from_rgb(self.value as u8, (j % 255) as u8, ((i + j) % 255) as u8)
-            });
+            canvas.clear(Color::magenta());
         }
     }
 
@@ -44,7 +43,9 @@ mod tests {
 
         let mut my_logic = MyLogic::new();
 
-        let mut app = App::new(Config::default());
+        let config = Config::new(String::from("Canvas"), 4.0 / 3.0, 300, 1.0, glfw::SwapInterval::None);
+
+        let mut app = App::new(config);
         app.run(&mut my_logic);
 
     }
