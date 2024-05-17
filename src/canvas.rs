@@ -152,7 +152,7 @@ impl Canvas {
     }
 
     pub fn put_pixel(&mut self, i: u32, j: u32, color: Color) {
-        let i = i - self.get_width() / 2;
+        let i = i + self.get_width() / 2;
         let j = j + self.get_height() / 2;
         let index = (i + (j * self.width)) as usize;
         self.pixels[index] = color.0;
