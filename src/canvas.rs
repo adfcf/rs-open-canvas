@@ -1,5 +1,7 @@
 use std::ops::Mul;
 
+use super::mathsf::Vec4;
+
 // format ABGR
 pub struct Color(u32);
 
@@ -12,6 +14,9 @@ impl Color {
     pub fn gray_shade(f: f32) -> Self {
         let f = (255.0 * f.clamp(0f32, 1f32)) as u8;
         Self::from_rgb(f, f, f)
+    }
+    pub fn from_vec4(v: &Vec4) -> Self {
+        Self::from_rgba((v.get_x() * 255f32) as u8, (v.get_y() * 255f32) as u8, (v.get_z() * 255f32) as u8, (v.get_w() * 255f32) as u8)
     }
     pub fn from_rgba(red: u8, green: u8, blue: u8, alpha: u8) -> Self {
         let mut c = ALPHA;
