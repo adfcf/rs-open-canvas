@@ -130,7 +130,8 @@ impl Color {
 }
 
 pub struct Canvas {
-    pixels: Vec<u32>,
+    depth_buffer: Vec<f32>,
+    color_buffer: Vec<u32>,
     width: u32,
     height: u32,
 }
@@ -139,8 +140,10 @@ impl Canvas {
 
     pub fn new(width: u32, height: u32) -> Canvas {
         let vec: Vec<u32> = vec![u32::MAX; (width * height) as usize];
+        let buf: Vec<f32> = vec![f32::INFINITY; (width * height) as usize];
         Canvas {
-            pixels: vec,
+            depth_buffer: buf,
+            color_buffer: vec,
             width,
             height,
         }
@@ -157,14 +160,32 @@ impl Canvas {
     }
 
     pub fn put_pixel(&mut self, i: i32, j: i32, color: Color) {
+        self.draw_pixel(i, j, f32::NEG_INFINITY, color);
+    }
+
+    pub fn draw_pixel(&mut self, i: i32, j: i32, z: f32, color: Color) {
+
         let i =  i + self.get_width() / 2;
         let j =  -j + self.get_height() / 2;
         let index = (i + (j * self.get_width())) as usize;
-        self.pixels[index] = color.0;
+
+        // depth test fail
+        if self.depth_buffer[index] < z {
+            return;
+        } else {
+            self.depth_buffer[index] = z;
+        }
+
+        self.color_buffer[index] = color.0;
+
     }
 
-    pub fn clear(&mut self, color: Color) {
-        self.pixels.fill_with(|| color.0);
+    pub fn clear_color(&mut self, color: Color) {
+        self.color_buffer.fill_with(|| color.0);
+    }
+
+    pub fn clear_depth(&mut self, depth: f32) {
+        self.depth_buffer.fill_with(|| depth);
     }
 
     pub fn get_width(&self) -> i32 {
@@ -176,7 +197,7 @@ impl Canvas {
     }
 
     pub fn raw(&self) -> *const u32 {
-        self.pixels.as_ptr()
+        self.color_buffer.as_ptr()
     }
 
 }

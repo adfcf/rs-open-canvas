@@ -27,7 +27,7 @@ mod tests {
         }
     
         fn render_routine(&mut self, canvas: &mut Canvas) {
-            canvas.clear(Color::white());
+            canvas.clear_color(Color::white());
         }
     }
 
