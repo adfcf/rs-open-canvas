@@ -16,6 +16,15 @@ impl Vec3 {
     pub fn lerp(v0: &Vec3, v1: &Vec3, f: f32) -> Self {
         Self::addition(v0, Self::subtraction(v1, v0).multiply(f))
     }
+    pub fn get_x(&self) -> f32 {
+        self.0
+    }
+    pub fn get_y(&self) -> f32 {
+        self.1
+    }
+    pub fn get_z(&self) -> f32 {
+        self.2
+    }
     pub fn multiply(&mut self, f: f32) -> &mut Self {
         self.0 *= f;
         self.1 *= f;
