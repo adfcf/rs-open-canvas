@@ -17,6 +17,11 @@ impl Vec3 {
     pub fn lerp(v0: &Vec3, v1: &Vec3, f: f32) -> Self {
         Self::addition(v0, Self::subtraction(v1, v0).multiply(f))
     }
+    pub fn set(&mut self, x: f32, y: f32, z: f32) {
+        self.0 = x;
+        self.1 = y;
+        self.2 = z;
+    }
     pub fn get_x(&self) -> f32 {
         self.0
     }
@@ -25,6 +30,14 @@ impl Vec3 {
     }
     pub fn get_z(&self) -> f32 {
         self.2
+    }
+    pub fn floor_xy(&mut self) {
+        self.0 = self.0.floor();
+        self.1 = self.1.floor();
+    }
+    pub fn ceil_xy(&mut self) {
+        self.0 = self.0.ceil();
+        self.1 = self.1.ceil();
     }
     pub fn multiply(&mut self, f: f32) -> &mut Self {
         self.0 *= f;
@@ -58,6 +71,12 @@ impl Vec4 {
     }
     pub fn subtraction(va: &Vec4, vb: &Vec4) -> Self {
         Self (va.0 - vb.0, va.1 - vb.1, va.2 - vb.2, va.3 - vb.3)
+    }
+    pub fn set(&mut self, x: f32, y: f32, z: f32, w: f32) {
+        self.0 = x;
+        self.1 = y;
+        self.2 = z;
+        self.3 = w;
     }
     pub fn get_x(&self) -> f32 {
         self.0
