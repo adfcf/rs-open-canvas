@@ -142,19 +142,19 @@ impl Canvas {
     }
 
     pub fn fill_ij<F>(&mut self, filling_function: F) 
-    where F: Fn(u32, u32) -> Color
+    where F: Fn(i32, i32) -> Color
     {
-        for j in 0..self.height {
-            for i in 0..self.width {
+        for j in 0..self.get_height() {
+            for i in 0..self.get_width() {
                 self.put_pixel(i, j, filling_function(i, j));
             }
         }
     }
 
-    pub fn put_pixel(&mut self, i: u32, j: u32, color: Color) {
-        let i = i + self.get_width() / 2;
-        let j = j + self.get_height() / 2;
-        let index = (i + (j * self.width)) as usize;
+    pub fn put_pixel(&mut self, i: i32, j: i32, color: Color) {
+        let i =  i + self.get_width() / 2;
+        let j =  -j + self.get_height() / 2;
+        let index = (i + (j * self.get_width())) as usize;
         self.pixels[index] = color.0;
     }
 
@@ -162,12 +162,12 @@ impl Canvas {
         self.pixels.fill_with(|| color.0);
     }
 
-    pub fn get_width(&self) -> u32 {
-        self.width
+    pub fn get_width(&self) -> i32 {
+        self.width as i32
     }
 
-    pub fn get_height(&self) -> u32 {
-        self.height
+    pub fn get_height(&self) -> i32 {
+        self.height as i32
     }
 
     pub fn raw(&self) -> *const u32 {

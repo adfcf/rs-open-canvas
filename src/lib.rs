@@ -11,7 +11,6 @@ mod tests {
     use app::App;
     use window::Config;
     use canvas::Canvas;
-
     use canvas::Color;
 
     use self::app::Logic;
@@ -28,7 +27,7 @@ mod tests {
         }
     
         fn render_routine(&self, canvas: &mut Canvas) {
-            canvas.clear(Color::magenta());
+            canvas.clear(Color::white());
         }
     }
 
@@ -43,7 +42,7 @@ mod tests {
 
         let mut my_logic = MyLogic::new();
 
-        let config = Config::new(String::from("Canvas"), 4.0 / 3.0, 300, 1.0, glfw::SwapInterval::None);
+        let config = Config::new(String::from("Canvas"), 1.0 / 1.0, 100, 0.5, glfw::SwapInterval::None);
 
         let mut app = App::new(config);
         app.run(&mut my_logic);
