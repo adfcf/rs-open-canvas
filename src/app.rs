@@ -10,7 +10,7 @@ pub struct App {
 
 pub trait Logic {
     fn update_routine(&mut self, time: f64, window: &Window);
-    fn render_routine(&self, canvas: &mut Canvas);
+    fn render_routine(&mut self, canvas: &mut Canvas);
 }
 
 impl App {

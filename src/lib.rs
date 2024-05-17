@@ -26,7 +26,7 @@ mod tests {
             self.value = (time.cos() * 255f64).abs();
         }
     
-        fn render_routine(&self, canvas: &mut Canvas) {
+        fn render_routine(&mut self, canvas: &mut Canvas) {
             canvas.clear(Color::white());
         }
     }
