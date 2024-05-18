@@ -160,7 +160,7 @@ impl Canvas {
     }
 
     pub fn put_pixel(&mut self, i: i32, j: i32, color: Color) {
-        self.draw_pixel(i, j, f32::NEG_INFINITY, color);
+        self.draw_pixel(i, j, f32::NAN, color);
     }
 
     pub fn draw_pixel(&mut self, i: i32, j: i32, z: f32, color: Color) {
@@ -170,7 +170,7 @@ impl Canvas {
         let index = (i + (j * self.get_width())) as usize;
 
         // depth test fail
-        if self.depth_buffer[index] < z {
+        if self.depth_buffer[index] <= z {
             return;
         } else {
             self.depth_buffer[index] = z;

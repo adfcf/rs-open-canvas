@@ -6,6 +6,7 @@ use super::{
 pub struct App {
     window: Window,
     canvas: Canvas,
+    fps_print: bool,
 }
 
 pub trait Logic {
@@ -25,6 +26,7 @@ impl App {
         App {
             window,
             canvas,
+            fps_print: false,
         }
 
     }
@@ -41,7 +43,9 @@ impl App {
             timer += self.window.now() - last_time;
             last_time = self.window.now();
             if timer >= ONE_SECOND {
-                println!("FPS: {}", frame_count);
+                if self.fps_print {
+                    println!("FPS: {}", frame_count);
+                }
                 frame_count = 0;
                 timer = 0.0;
             }  
@@ -54,6 +58,10 @@ impl App {
             frame_count += 1;
         }
 
+    }
+
+    pub fn toggle_fps_print(&mut self) {
+        self.fps_print = !self.fps_print;
     }
 
     pub fn get_window(&self) -> &Window {
