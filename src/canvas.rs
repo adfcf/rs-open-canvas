@@ -149,20 +149,6 @@ impl Canvas {
         }
     }
 
-    pub fn fill_ij<F>(&mut self, filling_function: F) 
-    where F: Fn(i32, i32) -> Color
-    {
-        for j in 0..self.get_height() {
-            for i in 0..self.get_width() {
-                self.put_pixel(i, j, filling_function(i, j));
-            }
-        }
-    }
-
-    pub fn put_pixel(&mut self, i: i32, j: i32, color: Color) {
-        self.draw_pixel(i, j, f32::NAN, color);
-    }
-
     pub fn draw_pixel(&mut self, i: i32, j: i32, z: f32, color: Color) {
 
         let i =  i + self.get_width() / 2;
@@ -170,7 +156,7 @@ impl Canvas {
         let index = (i + (j * self.get_width())) as usize;
 
         // depth test fail
-        if self.depth_buffer[index] <= z {
+        if self.depth_buffer[index] < z {
             return;
         } else {
             self.depth_buffer[index] = z;
